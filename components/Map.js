@@ -1,117 +1,121 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {Text, Button, PermissionsAndroid, StyleSheet} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, Button, PermissionsAndroid, StyleSheet } from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 function Map() {
-  {
-    const mapRef = useRef(null);
+  const mapRef = useRef(null);
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+  const [watchId, setWatchId] = useState(null);
 
-    const [location, setLocation] = useState({
-      latitude: 0,
-      longitude: 0,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
-    });
-
-    const [errorr, setError] = useState('');
-    var watchID = useRef(null);
-
-    const goToTokyo = () => {
-      mapRef.current.animateToRegion(location, 3 * 1000);
-    };
-
-    useEffect(() => {
-      const requestLocationPermission = async () => {
-        if (Platform.OS === 'ios') {
-          getOneTimeLocation();
-        } else {
-          try {
-            const granted = await PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-              {
-                title: 'Location Access Required',
-                message: 'This App needs to Access your location',
-              },
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              await getOneTimeLocation();
-            } else {
-              console.log('Permission Denied');
-            }
-          } catch (err) {
-            console.warn(err);
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This app needs to access your location.',
           }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.getCurrentPosition(
+            position => {
+              const { latitude, longitude } = position.coords;
+              setLocation({ latitude, longitude });
+              mapRef.current.animateToRegion(
+                {
+                  latitude,
+                  longitude,
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01,
+                },
+                1000
+              );
+            },
+            error => {
+              setError(error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+          );
+          const id = Geolocation.watchPosition(
+            position => {
+              const { latitude, longitude } = position.coords;
+              setLocation({ latitude, longitude });
+            },
+            error => {
+              setError(error.message);
+            },
+            { enableHighAccuracy: true, distanceFilter: 10, interval: 5000 }
+          );
+          setWatchId(id);
+        } else {
+          setError('Location permission denied');
         }
-      };
-      requestLocationPermission();
-      return () => {
-        Geolocation.clearWatch(watchID);
-      };
-    }, []);
-
-    const getOneTimeLocation = async () => {
-      Geolocation.getCurrentPosition(
-        pos => {
-          let latitude = pos.coords.latitude;
-          let longitude = pos.coords.longitude;
-          let latitudeDelta = 0.092;
-          let longitudeDelta = 0.0421;
-          setLocation({latitude, longitude, latitudeDelta, longitudeDelta});
-          // console.log(location);
-          goToTokyo;
-        },
-        err => {
-          console.warn(err.message);
-          setError(err.message);
-        },
-        {enableHighAccuracy: false, timeout: 5000},
-      );
+      } catch (error) {
+        console.warn(error);
+      }
     };
 
-    if (errorr) {
-      return <Text style={styles.text}>{errorr}</Text>;
-    }
-    
-    return (  
-      <>
+    requestLocationPermission();
+
+    return () => {
+      if (watchId !== null) {
+        Geolocation.clearWatch(watchId);
+      }
+    };
+  }, []);
+
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
+  return (
+    <>
+      {location ? (
         <MapView
-          style={{flex: 1}}
+          style={styles.map}
           initialRegion={{
-            latitude: 19.076,
-            longitude: 72.8777,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
           }}
           provider={PROVIDER_GOOGLE}
-          ref={mapRef}
-          // onRegionChangeComplete={(region) => setRegion(region)}
-        >
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          zoomControlEnabled={true}
+          minZoomLevel={15}
+          maxZoomLevel={20}
+          ref={mapRef}>
           <Marker
-            key="1"
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude,
-            }}></Marker>
+            }}
+          />
         </MapView>
-        <Button onPress={() => goToTokyo()} title="Go to My location" />
-
-        {/* <Button onPress={() => getOneTimeLocation()} title=" My location" /> */}
-        <Text style={styles.text}>Current latitude: {location.latitude}</Text>
-        <Text style={styles.text}>Current longitude: {location.longitude}</Text>
-      </>
-    );
-  }
+      ) : (
+        <Text style={styles.loadingText}>Loading...</Text>
+      )}
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
   map: {
-    height: 400,
-    marginTop: 80,
+    flex: 1,
   },
-  text: {
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 50,
+  },
+  loadingText: {
     color: 'black',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });
 

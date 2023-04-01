@@ -1,61 +1,55 @@
-import React , { useState }  from 'react';
-import {StyleSheet, Text,TextInput, View ,StatusBar ,Button} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  StatusBar,
+  Button,
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Map from './components/Map';
-
+import SpeechToText from './components/SpeechToText';
 
 
 const Stack = createNativeStackNavigator();
 
-
 const YourApp = () => {
-
   return (
-
     <NavigationContainer>
-    <Stack.Navigator>
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Home' }}
+          options={{title: 'Home'}}
         />
-        
-        <Stack.Screen
-          name="Map"
-          component={Map}
-        />
+
+        <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="SpeechToText" component={SpeechToText} />
+  
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
-
-
-const HomeScreen = ({ navigation }) => {
-  const [text, setText] = useState('');
+const HomeScreen = ({navigation}) => {
   return (
     <>
-    <Button
-      title="Go to Map"
-      onPress={() =>
-        navigation.navigate('Map')
-      }
-    />
-    
+      <Button title="Go to Map" onPress={() => navigation.navigate('Map')} />
+      <Button
+        title="Go to SpeechToText"
+        onPress={() => navigation.navigate('SpeechToText')}
+      />
 
 
-    <View style={styles.container}>
-    <Text style = {styles.text}>
-        Try going to Map! 🎉   
-      </Text>
-
+      <View style={styles.container}>
+        <Text style={styles.text}>Try going to Map! 🎉</Text>
       </View>
     </>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -69,11 +63,11 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: 'pink',
     marginHorizontal: 20,
-    flex:1,
+    flex: 1,
   },
   text: {
     color: 'black',
-  }
+  },
 });
 
 export default YourApp;
