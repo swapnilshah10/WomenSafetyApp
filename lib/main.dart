@@ -1,7 +1,4 @@
 import 'dart:async';
-
-// import 'package:background_location/background_location.dart';
-// import 'package:camera/camera.dart';
 import 'package:blurry/blurry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gosecure/Onboarding/onboarding_screen.dart';
 import 'package:gosecure/background_services.dart';
 import 'package:workmanager/workmanager.dart';
-
 
 // List<CameraDescription> cameras;
 Future<void> main() async {
@@ -51,16 +47,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'GoSecure',
+      title: 'Nariksha',
       theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        primarySwatch: Colors.blue,
+        fontFamily: GoogleFonts.rajdhani().fontFamily,
+        primarySwatch: Colors.purple
       ),
       home: FutureBuilder(
           future: isAppOpeningForFirstTime(),
@@ -81,6 +75,7 @@ class MyApp extends StatelessWidget {
           }),
     );
   }
+
   Future<bool> isAppOpeningForFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool result = prefs.getBool("appOpenedBefore") ?? false;
@@ -90,7 +85,6 @@ class MyApp extends StatelessWidget {
     return result;
   }
 }
-
 
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
@@ -103,4 +97,3 @@ class HexColor extends Color {
     return int.parse(hexColor, radix: 16);
   }
 }
-
