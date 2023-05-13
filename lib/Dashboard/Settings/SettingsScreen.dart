@@ -167,17 +167,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               )),
             ),
           ),
-          ListTile(
-            title: Text("Share"),
-            leading: CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              child: Center(
-                  child: Image.asset(
-                "assets/share.png",
-                height: 24,
-              )),
-            ),
-          ),
+          // ListTile(
+          //   title: Text("Share"),
+          //   leading: CircleAvatar(
+          //     backgroundColor: Colors.grey[200],
+          //     child: Center(
+          //         child: Image.asset(
+          //       "assets/share.png",
+          //       height: 24,
+          //     )),
+          //   ),
+          // ),
         ],
       ),
     );

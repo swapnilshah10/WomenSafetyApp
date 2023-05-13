@@ -48,17 +48,10 @@ class AboutUs extends StatelessWidget {
           AboutCard(
             asset: "GoSecure-logos",
             desc:
-                """GoSecure is a vigilant mobile application that enables the user to stay connected with the ones who care! It gives the user an option to share live location to concerned people through SOS alerts and enables the user to access emergency services. Be a witness of the unfortunate occurring incident and call for help. It is your personal companion.""",
+                """Nariksha is a vigilant mobile application that enables the user to stay connected with the ones who care! It gives the user an option to share live location to concerned people through SOS alerts and enables the user to access emergency services. Be a witness of the unfortunate occurring incident and call for help. It is your personal companion.""",
             subtitle: "You Deserve to be safe!",
-            title: "GoSecure",
+            title: "Nariksha",
             sizeFactor: 1.8,
-          ),
-          AboutCard(
-            desc: "Divij Katyal - VIT\nHarshika Chaudhary - IIT, Mandi\nPrerna Sharma - DTU",
-            asset: "about",
-            subtitle: "Made with ❤️ for Her!",
-            title: "GoSecure Team",
-            sizeFactor: 2.5,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -91,7 +84,7 @@ class AboutUs extends StatelessWidget {
                   endIndent: 10,
                 ),
               ),
-              Text("© 2022 Divij Katyal, All rights reserved."),
+              Text("© 2023, All rights reserved."),
               Expanded(
                 child: Divider(
                   indent: 10,
@@ -116,8 +109,8 @@ class AboutUs extends StatelessWidget {
           "assets/GoSecure-logos.png",
           height: 40,
         ),
-        applicationName: "GoSecure - Women Safety",
+        applicationName: "Nariksha - Women Safety",
         applicationLegalese:
-            "GoSecure is providing with a solution to female’s problems, an entirely userfriendly app and a need of the hour, aiming to connect you to the ones who care for you!");
+            "Nariksha is providing with a solution to female’s problems, an entirely userfriendly app and a need of the hour, aiming to connect you to the ones who care for you!");
   }
 }

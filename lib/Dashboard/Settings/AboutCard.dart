@@ -19,7 +19,7 @@ class AboutCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20,left: 20,right:20),
+      margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / sizeFactor,
       child: Stack(
@@ -45,9 +45,9 @@ class AboutCard extends StatelessWidget {
                         backgroundColor: Colors.grey[200],
                         child: Center(
                             child: Image.asset(
-                              "assets/$asset.png",
-                              fit: BoxFit.cover,
-                            )),
+                          "assets/$asset.png",
+                          fit: BoxFit.cover,
+                        )),
                       ),
                     ),
                     // SizedBox(
