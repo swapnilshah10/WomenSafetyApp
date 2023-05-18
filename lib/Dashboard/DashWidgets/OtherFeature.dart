@@ -18,7 +18,7 @@ class OtherFeature extends StatelessWidget {
         children: [
           FakeCall(),
           Complaint(),
-          CameraDetection(),
+          // CameraDetection(),
           Defence()
         ],
       ),

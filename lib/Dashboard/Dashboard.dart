@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
   //     debugPrint("got new command ${command.toString()}");
   //   });
   // }
-  _DashboardState({this.currentPage=0});
+  _DashboardState({this.currentPage = 0});
 
   List<Widget> screens = [Home(), MyContactsScreen()];
   bool alerted = false;
@@ -56,7 +56,6 @@ class _DashboardState extends State<Dashboard> {
       borderRadius: BorderRadius.circular(15.0),
     );
   }
-
 
   @override
   void initState() {
@@ -82,7 +81,7 @@ class _DashboardState extends State<Dashboard> {
           String link = '';
           print("Test 7");
           try {
-            double lat =1.0;
+            double lat = 1.0;
             double long = 2.0;
             print("$lat ... $long");
             print("Test 9");
@@ -96,25 +95,25 @@ class _DashboardState extends State<Dashboard> {
                 debugPrint(
                   'No Contacts Found!',
                 );
-                SchedulerBinding.instance.addPostFrameCallback((_) => showLocAlert(context));
+                SchedulerBinding.instance
+                    .addPostFrameCallback((_) => showLocAlert(context));
                 return;
               } else {
-                print("heheehehehehhe");
                 for (int i = 0; i < numbers.length; i++) {
                   //Here I used telephony to send sms messages to the saved contacts.
                   // Telephony.backgroundInstance.sendSms(
                   //     to: numbers[i], message: "Help Me! Track me here.\n$link");
-                    if (alerted) {
-                      int pin = (prefs.getInt('pin') ?? -1111);
-                      print('User $pin .');
-                      if (pin == -1111) {
-                        sendAlertSMS(false);
-                      } else {
-                        showPinModelBottomSheet(pin);
-                      }
+                  if (alerted) {
+                    int pin = (prefs.getInt('pin') ?? -1111);
+                    print('User $pin .');
+                    if (pin == -1111) {
+                      sendAlertSMS(false);
                     } else {
-                      sendAlertSMS(true);
+                      showPinModelBottomSheet(pin);
                     }
+                  } else {
+                    sendAlertSMS(true);
+                  }
                 }
                 prefs.setBool("alerted", true);
               }
@@ -152,7 +151,6 @@ class _DashboardState extends State<Dashboard> {
         alerted = prefs.getBool("alerted") ?? false;
       });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +191,10 @@ class _DashboardState extends State<Dashboard> {
                           "assets/alarm.png",
                           height: 24,
                         ),
-                        Text("STOP",style: TextStyle(color: Colors.black),)
+                        Text(
+                          "STOP",
+                          style: TextStyle(color: Colors.black),
+                        )
                       ],
                     )
                   : Image.asset(
@@ -428,19 +429,20 @@ class _DashboardState extends State<Dashboard> {
           );
         });
   }
-  void showLocAlert(BuildContext context){
+
+  void showLocAlert(BuildContext context) {
     Blurry.error(
-        title:'Missing Contact',
+        title: 'Missing Contact',
         // layoutType: LayoutType.center,
         description:
-        'No contacts found. Call 100 ASAP or tap our assistant and say POLICE',
-        popupHeight: MediaQuery.of(context).size.height/3.1,
-        confirmButtonText:  'OK',
+            'No contacts found. Call 100 ASAP or tap our assistant and say POLICE',
+        popupHeight: MediaQuery.of(context).size.height / 3.1,
+        confirmButtonText: 'OK',
         onConfirmButtonPressed: () {
           Navigator.pop(context);
-        })
-        .show(context);
+        }).show(context);
   }
+
   void _showSnackBar(String pin, BuildContext context, int userPin) {
     if (userPin == int.parse(pin)) {
       Fluttertoast.showToast(
