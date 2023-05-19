@@ -29,6 +29,12 @@ List<OnboardingContents> contents = [
     desc: "Share instant alerts with your loved ones in just one tap",
   ),
   OnboardingContents(
+    title: "Scream Detection",
+    image: "assets/women.png",
+    desc:
+        " Stay Safe and Alert - this feature identifies intense scream sounds in the environment, allowing users to receive timely alerts.",
+  ),
+  OnboardingContents(
     title: "Shake detector",
     image: "assets/shake.png",
     desc: "Nariksha detects shake frequency to send alerts",

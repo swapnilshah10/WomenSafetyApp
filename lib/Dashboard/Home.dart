@@ -99,9 +99,6 @@ class _HomeState extends State<Home> {
       case "police":
         _callNumber("100");
         break;
-      case "spycam":
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => LiveFeed()));
-        break;
       case "home":
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Dashboard()));
         break;
